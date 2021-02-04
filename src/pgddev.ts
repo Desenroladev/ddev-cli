@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 
-const program = require('commander');
-const db = require('./src/database/database');
+import program from 'commander';
+import {Database} from './database/database';
+import {NewCommand} from './commands/new.command';
 
-
-const package = require('./package.json');
-
-program.version(package.version);
+program.version('1.0.0');
 
 program
     .command('g [command]')
@@ -19,21 +17,22 @@ program
         console.log('options: ', options);
         console.log('flags: ', flags);
 
-        const connection = await db.getConnection();
-        await connection.start();
-        const rows = await connection.query('select now()');
+        const db = new Database();
+        //const connection = await db.getConnection();
+        //await connection.start();
+        const rows = await db.query('select now()');
 
-        //console.log(rows);
+        console.log(rows);
 
-        await connection.commit();
+        //await connection.release();
     });
-
 
 program
     .command('new [project]')
     .description('Create new Project')
     .action((project) => {
-        console.log(project);
+        const cmd = new NewCommand();
+        cmd.execute(project)
     });
 
 program.parse(process.argv);

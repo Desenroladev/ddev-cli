@@ -2,12 +2,13 @@
   "name": "pgddev",
   "version": "1.0.0",
   "description": "CLI to automate repetitive tasks in PostgreSQL",
-  "main": "pgddev.js",
+  "main": "build/pgddev.js",
   "bin": {
-    "pgddev": "pgddev.js"
+    "pgddev": "build/pgddev.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "nodemon",
+    "build": "rimraf ./build && tsc && npm install -g"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   },
   "homepage": "https://github.com/Desenroladev/pgddev#readme",
   "dependencies": {
+    "@types/pg": "^7.14.9",
     "commander": "^7.0.0",
     "dotenv": "^8.2.0",
     "pg": "^8.5.1"
@@ -32,6 +34,7 @@
   "devDependencies": {
     "@types/node": "^14.14.25",
     "nodemon": "^2.0.7",
+    "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   }
