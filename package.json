@@ -1,0 +1,38 @@
+{
+  "name": "pgddev",
+  "version": "1.0.0",
+  "description": "CLI to automate repetitive tasks in PostgreSQL",
+  "main": "pgddev.js",
+  "bin": {
+    "pgddev": "pgddev.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Desenroladev/pgddev.git"
+  },
+  "keywords": [
+    "PostgreSQL",
+    "Desenrola",
+    "Dev"
+  ],
+  "author": "Antoniel Lima",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Desenroladev/pgddev/issues"
+  },
+  "homepage": "https://github.com/Desenroladev/pgddev#readme",
+  "dependencies": {
+    "commander": "^7.0.0",
+    "dotenv": "^8.2.0",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.25",
+    "nodemon": "^2.0.7",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
