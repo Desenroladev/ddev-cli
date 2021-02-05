@@ -8,6 +8,8 @@ export class Database {
 
     constructor() {
         const config = {...dotenv.config().parsed};
+
+        console.log(config);
         this.pool = new Pool({
                         user: config.DB_USER,
                         host: config.DB_URL,

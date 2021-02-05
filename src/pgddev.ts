@@ -4,7 +4,7 @@ import program from 'commander';
 import {Database} from './database/database';
 import {NewCommand} from './commands/new.command';
 
-program.version('1.0.0');
+program.version('1.0.1');
 
 program
     .command('g [command]')
@@ -12,10 +12,10 @@ program
     .option('-s, --schema <schema>')
     .option('-f, --folder <folder>')
     .description('Create DML')
-    .action(async(options, flags) => {
+    .action(async(command, options) => {
 
+        console.log('command: ', command);
         console.log('options: ', options);
-        console.log('flags: ', flags);
 
         const db = new Database();
         //const connection = await db.getConnection();
@@ -29,10 +29,13 @@ program
 
 program
     .command('new [project]')
+    .option('-p, --project <project>')
+    .option('-s, --schema <schema>')
     .description('Create new Project')
-    .action((project) => {
+    .action((command: string, options: string) => {
+        console.log(command, options);
         const cmd = new NewCommand();
-        cmd.execute(project)
+        cmd.execute(command)
     });
 
 program.parse(process.argv);
