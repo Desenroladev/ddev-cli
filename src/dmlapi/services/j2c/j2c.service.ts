@@ -11,7 +11,7 @@ create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{tag}}(
     language plpgsql
 as $function$
 ------------------------------------------------------------------
--- LIVNOW: LIV Noop Of Work
+-- Desenrola Dev: Turns json into a record collection
 ------------------------------------------------------------------
 -- (c) Copyright 2020 Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright 2020 desenroladev.com.br

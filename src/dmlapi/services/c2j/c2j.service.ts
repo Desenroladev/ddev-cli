@@ -13,7 +13,7 @@ returns jsonb
 language plpgsql
 as $function$
 ------------------------------------------------------------------
--- LIVNOW: LIV Noop Of Work
+-- Desenrola Dev: Transform a collection into a json array
 ------------------------------------------------------------------
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br

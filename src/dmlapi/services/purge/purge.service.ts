@@ -11,7 +11,7 @@ create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{tag}}(
 returns void language plpgsql
 as $function$
 ------------------------------------------------------------------
--- LIVSYNC: Quality Assurance Testing
+-- Desenrola Dev: Remove record by id
 ------------------------------------------------------------------
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br
@@ -44,7 +44,7 @@ $function$
 returns void language plpgsql
 as $function$
 ------------------------------------------------------------------
--- LIVSYNC: Quality Assurance Testing
+-- Desenrola Dev: Remove record by record
 ------------------------------------------------------------------
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br
@@ -69,7 +69,7 @@ $function$
 returns void language plpgsql
 as $function$
 ------------------------------------------------------------------
--- LIVSYNC: Quality Assurance Testing
+-- Desenrola Dev: Quality Assurance Testing
 ------------------------------------------------------------------
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br

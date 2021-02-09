@@ -14,7 +14,7 @@ returns {{schema_data}}.{{table_name}}
 language plpgsql
 as $function$
 ------------------------------------------------------------------
--- LIVNOW: LIV Noop Of Work
+-- Desenrola Dev: Turns json into a record
 ------------------------------------------------------------------
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br
@@ -28,17 +28,8 @@ declare
     lv_data             {{schema_data}}.{{table_name}};
 begin
     ------------------------------------------------------------
-    lr_data_inclusao := '"'||coalesce(cast(fv_jsonb->>'data_inclusao' as timestamp), clock_timestamp())||'"';
-    select jsonb_set(fv_jsonb, '{"data_inclusao"}', lr_data_inclusao::jsonb) into fv_jsonb;
-    ------------------------------------------------------------
-    if fv_jsonb->>'pessoa_source_id' is not null then                                                              --009 uuid
-        select 
-            jsonb_set(fv_jsonb, '{"pessoa_id"}', ('"'||p.id||'"')::jsonb) into fv_jsonb
-        from livnow.livnow_pessoa p 
-        where p.source_id = fv_jsonb->>'pessoa_source_id';                        
-    end if;
-    ------------------------------------------------------------
     {{j2r_rows}}
+    ------------------------------------------------------------
     return lv_data;
 end;
 $function$;`];

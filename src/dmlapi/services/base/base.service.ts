@@ -12,7 +12,7 @@ export class BaseService {
     protected folder_file: string = '';
 
     protected file_name: string = `dmlapi_{{table_name}}_{{tag}}.sql`;
-    protected codigo: string = '';
+    protected code: string = '';
     protected tag: string = '';
     
     constructor() {
@@ -29,7 +29,7 @@ export class BaseService {
         file_name = file_name.replace('{{table_name}}', data.table_name);
         file_name = file_name.replace('{{tag}}', this.tag);
 
-        this.codigo = this.template.map(tpl => {
+        this.code = this.template.map(tpl => {
                             return tpl.replace(/\{{schema_create}}/gi, data.schema_create)
                                     .replace(/\{{table_name}}/gi, data.table_name)
                                     .replace(/\{{schema_data}}/gi, data.schema_data)
@@ -40,21 +40,21 @@ export class BaseService {
         
         return {
             file_name,
-            codigo: this.codigo
+            code: this.code
         };
     }
 
     async toFile(build: any) {
 
-        let {file_name, codigo} = build;
+        let {file_name, code} = build;
         
         file_name = file_name || this.file_name;
 
-        codigo = codigo || this.codigo;
+        code = code || this.code;
         
         const path_file = `${this.folder_file}/${file_name}`;
 
-        fs.writeFile( path.resolve(path_file), codigo, function(err) {
+        fs.writeFile( path.resolve(path_file), code, function(err) {
             if(err) {
                 throw err;
             }

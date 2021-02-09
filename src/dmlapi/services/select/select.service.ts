@@ -15,7 +15,7 @@ returns {{schema_data}}.{{table_name}}
     language plpgsql
 as $function$
 ------------------------------------------------------------------
--- LIVNOW: LIV Noop Of Work
+-- Desenrola Dev: Select record by id
 ------------------------------------------------------------------
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br

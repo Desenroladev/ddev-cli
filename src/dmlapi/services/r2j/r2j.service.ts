@@ -13,7 +13,7 @@ returns jsonb
     language plpgsql
 AS $function$
 ------------------------------------------------------------------
--- LIVNOW: LIV Noop Of Work
+-- Desenrola Dev: Convert JSONB to record
 ------------------------------------------------------------------
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br
@@ -21,11 +21,11 @@ AS $function$
 -- {{schema_data}}.{{table_name}}: record to jsonb
 ------------------------------------------------------------------
 declare
-    lv_jsonb jsonb;
+    lv_data jsonb;
 begin
-    lv_jsonb := row_to_json(fr_data,  -- record
+    lv_data := row_to_json(fr_data,  -- record
                             true);    -- pretty_bool
-    return lv_jsonb;
+    return lv_data;
 end;
 $function$
 ;`];
