@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       env:
-        S3_CONFIG: ${{ secrets.S3_CONFIG }}
+      S3_CONFIG: ${{ secrets.S3_CONFIG }}
       - run: echo $S3_CONFIG | base64 -d
 
 
