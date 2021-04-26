@@ -4,7 +4,7 @@ on:
     branches:
       - 'develop'
 jobs:
-  Explore-GitHub-Actions:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - run: echo $S3_CONFIG | base64 -d
