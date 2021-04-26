@@ -7,6 +7,8 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: aws s3
+      env:
+        S3_CONFIG: ${{ secrets.S3_CONFIG }}
+      - run: echo $S3_CONFIG | base64 -d
 
 
