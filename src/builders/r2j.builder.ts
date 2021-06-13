@@ -1,19 +1,16 @@
+import { BaseBuilder } from "./base.builder";
 
-import { BaseService } from '../base/base.service';
+export class R2JBuilder extends BaseBuilder {
 
-export class R2jService extends BaseService {
-
-    tag = 'r2j';
-
-    template = [`
-create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{tag}}(
+    constructor() {
+        const templates = [`
+create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{sufixo}}(
     fr_data {{table_schema}}.{{table_name}}
 )
-returns jsonb
+    returns jsonb
     language plpgsql
+    security definer
 AS $function$
-------------------------------------------------------------------
--- LIVNOW: LIV Noop Of Work
 ------------------------------------------------------------------
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br
@@ -27,7 +24,9 @@ begin
                             true);    -- pretty_bool
     return lv_jsonb;
 end;
-$function$
-;`];
+$function$;`];
+
+        super('r2j', templates);
+    }
 
 }

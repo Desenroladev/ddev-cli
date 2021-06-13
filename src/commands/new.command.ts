@@ -9,17 +9,28 @@ export class NewCommand extends BaseCommand {
 
         console.log('Create new project:', folder);
 
-        const folders = [
+        const sub_folders = [
             'views',
             'plpgsql',
             'tables',
-            'types'
+            'types',
+            'triggers',
+            'scripts'
         ];
-        if (!fs.existsSync(folder)) {
-            fs.mkdirSync(folder);
-        }
 
-        folders.map(dir => {
+        let folders = folder.split('/');
+        folders.push('');
+
+        const reducer = (folder: string, current: string) => {
+            if (folder.length > 0 && !fs.existsSync(folder)) {
+                fs.mkdirSync(folder);
+            }
+            return folder + '/' + current;
+        };
+
+        folders.reduce(reducer);
+
+        sub_folders.map(dir => {
             const path = folder + '/' + dir;
 
             console.log('Create new folder:', path)
@@ -28,13 +39,7 @@ export class NewCommand extends BaseCommand {
                 fs.mkdirSync(path);
             }
         });
-
-        const env_path =  `${folder}/.env`;
-        fs.appendFileSync(env_path, `DB_URL=127.0.0.1\n`);
-        fs.appendFileSync(env_path, `DB_DATABASE=${folder}\n`);
-        fs.appendFileSync(env_path, `DB_USER=${folder}\n`);
-        fs.appendFileSync(env_path, `DB_PASSWORD=${folder}\n`);
-        fs.appendFileSync(env_path, `DB_PORT=5432\n`);
+        
     }
 
 }

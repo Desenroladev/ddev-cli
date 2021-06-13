@@ -28,8 +28,8 @@ AS $function$
     lv_erro         jsonb := '{}';
     lv_rec   		record;
     ------------------------------------------
-    lr_{{table_name}}_arr       {{schema_data}}.{{table_name}}[];
-    lr_{{table_name}}           {{schema_data}}.{{table_name}};
+    lr_{{table_name}}_arr       {{table_schema}}.{{table_name}}[];
+    lr_{{table_name}}           {{table_schema}}.{{table_name}};
     ------------------------------------------
     lv_apply_start  timestamp;
     lv_apply_end    timestamp;
@@ -39,12 +39,12 @@ begin
     ------------------------------------------------------------------------------------
     if (fr_data is not null) then
         lr_data := {{schema_create}}.inbound_{{table_name}}_scatter(fr_payload => fr_data);
-    ---------------------------{{schema_data}}.livnow_pessoa-------------------------------------
+    ---------------------------{{table_schema}}.livnow_pessoa-------------------------------------
         if (lr_data is not null) then
         lv_rec := {{schema_create}}.inbound_{{table_name}}_inspect(fv_jsonb => lr_data);
         lv_erros := lv_erros || lv_rec."erros";
     ------------------------------------------------------------------------------------
-    lr_{{table_name}}_arr := {{schema_data}}.dmlapi_{{table_name}}_j2c(fv_jsonb => lv_rec."data");
+    lr_{{table_name}}_arr := {{table_schema}}.dmlapi_{{table_name}}_j2c(fv_jsonb => lv_rec."data");
     ------------------------LOOP--------------------------------------------------------                                    
         lv_index := 1;
         foreach lr_{{table_name}} in array lr_{{table_name}}_arr loop
@@ -53,7 +53,7 @@ begin
             ---------------------------------------------------
             select 
             p.id into lv_id
-            from {{schema_data}}.{{table_name}} p 
+            from {{table_schema}}.{{table_name}} p 
             where p.source_id = lv_source_id;
             ---------------------------------------------------
             if lv_id is null then
@@ -65,7 +65,7 @@ begin
             lv_index := lv_index + 1;
         end loop;
     --------------------------------------------------------------------
-        lv_erro  := {{schema_data}}.dmlapi_{{table_name}}_merge(fr_data => lr_{{table_name}}_arr);
+        lv_erro  := {{table_schema}}.dmlapi_{{table_name}}_merge(fr_data => lr_{{table_name}}_arr);
         lv_erros := lv_erros || lv_erro;
     ------------------------------------------------------------------------------------
         end if;

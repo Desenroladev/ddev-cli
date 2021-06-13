@@ -18,10 +18,10 @@ as $function$
 -- (c) Copyright 2020 Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright 2020 desenroladev.com.br
 ------------------------------------------------------------------
--- {{schema_data}}.{{table_name}}[]: jsonb to collection
+-- {{table_schema}}.{{table_name}}[]: jsonb to collection
 ------------------------------------------------------------------
 declare
-    lr_rrow         {{schema_data}}.{{table_name}};
+    lr_rrow         {{table_schema}}.{{table_name}};
     lr_jrow         jsonb;
     lr_count        int     := 1;
     lv_data         jsonb[];
@@ -33,7 +33,7 @@ begin
     foreach lr_jrow in array fv_jsonb loop   
     begin
 --------------------------------------------------------------------------------------------
-        perform {{schema_data}}.dmlapi_{{table_name}}_j2r(fv_jsonb => lr_jrow);
+        perform {{table_schema}}.dmlapi_{{table_name}}_j2r(fv_jsonb => lr_jrow);
         lv_data[lr_count] := lr_jrow;
         lr_count = lr_count + 1;
 --------------------------------------------------------------------------------------------

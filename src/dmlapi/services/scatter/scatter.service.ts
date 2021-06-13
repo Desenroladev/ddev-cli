@@ -19,7 +19,7 @@ as $function$
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br
 ------------------------------------------------------------------
--- {{schema_data}}.{{table_name}}: scatter to jsonb[]
+-- {{table_schema}}.{{table_name}}: scatter to jsonb[]
 ------------------------------------------------------------------
 declare
 begin

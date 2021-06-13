@@ -7,7 +7,7 @@ export class C2jService extends BaseService {
     tag = 'c2j';
     template = [`
 create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{tag}}(
-    ft_data             {{schema_data}}.{{table_name}}[]
+    ft_data             {{table_schema}}.{{table_name}}[]
 )
 returns jsonb
 language plpgsql
@@ -18,7 +18,7 @@ as $function$
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br
 ------------------------------------------------------------------
--- {{schema_data}}.{{table_name}}[]: collection to json
+-- {{table_schema}}.{{table_name}}[]: collection to json
 ------------------------------------------------------------------
 declare
     

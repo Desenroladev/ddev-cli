@@ -32,7 +32,7 @@ export class BaseService {
         this.codigo = this.template.map(tpl => {
                             return tpl.replace(/\{{schema_create}}/gi, data.schema_create)
                                     .replace(/\{{table_name}}/gi, data.table_name)
-                                    .replace(/\{{schema_data}}/gi, data.schema_data)
+                                    .replace(/\{{table_schema}}/gi, data.table_schema)
                                     .replace(/\{{tag}}/gi, this.tag)
                                     .replace(/\{{segment}}/gi, (data.segment || '') )
                                     .replace(/\{{ano}}/gi, new Date().getFullYear()+'');

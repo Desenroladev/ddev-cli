@@ -11,7 +11,7 @@ create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{tag}}(
     fv_id uuid, 
     fv_locking boolean default false
 )
-returns {{schema_data}}.{{table_name}}
+returns {{table_schema}}.{{table_name}}
     language plpgsql
 as $function$
 ------------------------------------------------------------------
@@ -20,17 +20,17 @@ as $function$
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br
 ------------------------------------------------------------------
--- {{schema_data}}.{{table_name}}: select to record
+-- {{table_schema}}.{{table_name}}: select to record
 ------------------------------------------------------------------
 declare
-    fr_data {{schema_data}}.{{table_name}};
+    fr_data {{table_schema}}.{{table_name}};
 begin
     if (fv_id is not null) then
     if (fv_locking) then
         select --+ qb_name(dmlapi_{{table_name}}_select)
                 a.*
         into fr_data
-        from {{schema_data}}.{{table_name}}    a
+        from {{table_schema}}.{{table_name}}    a
         where 1e1 = 1e1
             and a.id = fv_id
             for update nowait;
@@ -38,7 +38,7 @@ begin
         select --+ qb_name(dmlapi_{{table_name}}_select)
                 a.*
         into fr_data
-        from {{schema_data}}.{{table_name}}    a
+        from {{table_schema}}.{{table_name}}    a
         where 1e1 = 1e1
             and a.id = fv_id;
     end if;

@@ -8,12 +8,10 @@ export class Database {
 
     constructor() {
         const config = {...dotenv.config().parsed};
-
-        console.log(config);
         this.pool = new Pool({
                         user: config.DB_USER,
-                        host: config.DB_URL,
-                        database: config.DB_NAME,
+                        host: config.DB_HOST,
+                        database: config.DB_DATABASE,
                         password: config.DB_PASSWORD,
                         port: parseInt(config.DB_PORT)
                     });

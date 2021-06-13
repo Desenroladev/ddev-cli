@@ -8,8 +8,8 @@ export class MergeService extends BaseService {
   
     template = [`
 create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{tag}}(
-  fr_data {{schema_data}}.{{table_name}}
-) returns {{schema_data}}.{{table_name}}
+  fr_data {{table_schema}}.{{table_name}}
+) returns {{table_schema}}.{{table_name}}
 language plpgsql
 as $function$
 ------------------------------------------------------------------
@@ -19,14 +19,14 @@ as $function$
 -- dmlapi_{{table_name}}_{{tag}}: insert or update
 ------------------------------------------------------------------
 declare
-  lr_data    {{schema_data}}.{{table_name}};
+  lr_data    {{table_schema}}.{{table_name}};
 begin
   if (fr_data.id is not null) then
     lr_data := {{schema_create}}.dmlapi_{{table_name}}_select(fv_id      => fr_data.id,
                                                               fv_locking => true);
     if (lr_data.id is not null) then
       update --+ qb_name(dmlapi_{{table_name}}_merge)
-              {{schema_data}}.{{table_name}}
+              {{table_schema}}.{{table_name}}
           set 
             {{update_row_data}}
         where 1e1 = 1e1
@@ -34,7 +34,7 @@ begin
         returning * into fr_data;
     else
       insert --+ qb_name(dmlapi_{{table_name}}_merge)
-        into {{schema_data}}.{{table_name}}
+        into {{table_schema}}.{{table_name}}
             (
               {{into_row_data}}
             )
@@ -46,7 +46,7 @@ begin
     end if;
   else
     insert --+ qb_name(dmlapi_{{table_name}}_merge)
-      into {{schema_data}}.{{table_name}}
+      into {{table_schema}}.{{table_name}}
           (
             {{into_row_data}}  
           )
@@ -65,7 +65,7 @@ $function$
 
 
 `create or replace function {{schema_create}}.dmlapi_{{table_name}}_merge(
-  fr_data {{schema_data}}.{{table_name}}[]
+  fr_data {{table_schema}}.{{table_name}}[]
 ) returns jsonb
 language plpgsql
 as $function$
@@ -76,7 +76,7 @@ as $function$
 -- dmlapi_{{table_name}}_merge: insert or update collection
 ------------------------------------------------------------------
 declare
-  lr_data           {{schema_data}}.{{table_name}};
+  lr_data           {{table_schema}}.{{table_name}};
   lr_count          int;
   lv_erro           jsonb := '{}';
   lv_erros          jsonb := '[]';
@@ -262,7 +262,7 @@ end; $function$;`
     let template = this.template.map(tpl => {
                         return tpl.replace(/\{{schema_create}}/gi, data.schema_create)
                                 .replace(/\{{table_name}}/gi, data.table_name)
-                                .replace(/\{{schema_data}}/gi, data.schema_data)
+                                .replace(/\{{table_schema}}/gi, data.table_schema)
                                 .replace(/\{{ano}}/gi, new Date().getFullYear()+'')
                                 .replace(/\{{tag}}/gi, this.tag)
                                 .replace(/\{{update_row_data}}/gi, merge_update_rows)

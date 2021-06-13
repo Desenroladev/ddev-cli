@@ -10,7 +10,7 @@ export class J2rService extends BaseService {
 create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{tag}}(
     fv_jsonb jsonb
 )
-returns {{schema_data}}.{{table_name}}
+returns {{table_schema}}.{{table_name}}
 language plpgsql
 as $function$
 ------------------------------------------------------------------
@@ -19,13 +19,13 @@ as $function$
 -- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright {{ano}} desenroladev.com.br
 ------------------------------------------------------------------
--- {{schema_data}}.{{table_name}}: jsonb to record
+-- {{table_schema}}.{{table_name}}: jsonb to record
 ------------------------------------------------------------------
 declare
-    lr_data             {{schema_data}}.{{table_name}};
-    lr_empty            {{schema_data}}.{{table_name}};
+    lr_data             {{table_schema}}.{{table_name}};
+    lr_empty            {{table_schema}}.{{table_name}};
     lr_data_inclusao    varchar;
-    lv_data             {{schema_data}}.{{table_name}};
+    lv_data             {{table_schema}}.{{table_name}};
 begin
     ------------------------------------------------------------
     lr_data_inclusao := '"'||coalesce(cast(fv_jsonb->>'data_inclusao' as timestamp), clock_timestamp())||'"';
@@ -124,7 +124,7 @@ $function$;`];
         let template = this.template.map(tpl => {
                             return tpl.replace(/\{{schema_create}}/gi, data.schema_create)
                                     .replace(/\{{table_name}}/gi, data.table_name)
-                                    .replace(/\{{schema_data}}/gi, data.schema_data)
+                                    .replace(/\{{table_schema}}/gi, data.table_schema)
                                     .replace(/\{{ano}}/gi, new Date().getFullYear()+'')
                                     .replace(/\{{tag}}/gi, this.tag)
                                     .replace(/\{{j2r_rows}}/gi, j2r_rows);

@@ -7,7 +7,7 @@ export class J2cService extends BaseService {
     template = [`
 create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{tag}}(
     fv_jsonb    jsonb[]
-) returns {{schema_data}}.{{table_name}}[]
+) returns {{table_schema}}.{{table_name}}[]
     language plpgsql
 as $function$
 ------------------------------------------------------------------
@@ -16,13 +16,13 @@ as $function$
 -- (c) Copyright 2020 Antoniel Lima (antonielliimma@gmail.com)
 -- (c) Copyright 2020 desenroladev.com.br
 ------------------------------------------------------------------
--- {{schema_data}}.{{table_name}}[]: jsonb to collection
+-- {{table_schema}}.{{table_name}}[]: jsonb to collection
 ------------------------------------------------------------------
 declare
-    lr_rrow         {{schema_data}}.{{table_name}};
+    lr_rrow         {{table_schema}}.{{table_name}};
     lr_jrow         jsonb;
     lr_count        int := 1;
-    lv_data         {{schema_data}}.{{table_name}}[];
+    lv_data         {{table_schema}}.{{table_name}}[];
 begin
     foreach lr_jrow in array fv_jsonb loop
         lr_rrow := {{schema_create}}.dmlapi_{{table_name}}_j2r(fv_jsonb => lr_jrow);

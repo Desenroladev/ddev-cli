@@ -1,0 +1,18 @@
+{
+    "schemas": [
+        {
+            "name": "pep",
+            "tables": [
+                {"name": "atendimentos", "pk_type": "uuid", "pk_name": "id"},
+                {"name": "evolucoes", "pk_type": "uuid", "pk_name": "id"}
+            ]
+        },
+        {
+            "name": "pep",
+            "tables": [
+                {"name": "atendimentos", "pk_type": "uuid", "pk_name": "id"},
+                {"name": "evolucoes", "pk_type": "uuid", "pk_name": "id"}
+            ]
+        }
+    ]
+}
