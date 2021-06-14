@@ -1,3 +1,5 @@
+import { DmlModel } from "../models/dml.model";
+import { SourceCode } from "../models/source-code.model";
 import { BaseBuilder } from "./base.builder";
 
 export class MergeBuilder extends BaseBuilder {
@@ -93,6 +95,146 @@ exception when others then
 raise;
 end; $function$;`];
         super('merge', templates);
+    }
+
+
+    async build(model: DmlModel) : Promise<SourceCode> {
+    
+        const sql = `select 
+                        column_name, 
+                        ordinal_position,
+                        data_type,
+                        udt_name,
+                        character_maximum_length,
+                        numeric_precision,
+                        is_nullable
+                    from information_schema.columns 
+                    where table_name = $1
+                        and table_schema = $2
+                        and table_catalog = $3
+                    order by ordinal_position`;
+    
+        const binds: any = [
+            model.table.name,
+            model.table_schema,
+            model.table_catalog
+        ];
+
+        const columns = await this.db.query(sql, binds);
+    
+        let tpl_update_rows = `{{column_name}} {{espaco_left}} = fr_data.{{column_name}}{{virgula}} {{espaco_rigth}} --{{ordem}} {{data_type}}`
+    
+        let update_rows = columns.map((one: any, index: number) => {
+    
+            let espaco_left = this.generateSpaces(one.column_name);
+            
+            let espaco_rigth = this.generateSpaces(one.column_name);
+            
+            let ordem = this.formatWithZero(one.ordinal_position, 3);
+            let data_type = one.data_type;
+    
+            if(one.character_maximum_length > 0) {
+                data_type += `(${one.character_maximum_length})`;
+            }
+    
+            if(one.is_nullable == 'YES') {
+                data_type += ` not null`;
+            }
+    
+            return tpl_update_rows.replace(/\{{column_name}}/gi, one.column_name)
+                          .replace(/\{{espaco_left}}/gi, espaco_left)//coloca 50 espaços a esquerda
+                          .replace(/\{{espaco_rigth}}/gi, espaco_rigth)//coloca 50 espaços a direita
+                          .replace(/\{{ordem}}/gi, ordem)
+                          .replace(/\{{data_type}}/gi, data_type)
+                          .replace(/\{{virgula}}/gi, columns.length == (index+1) ? ' ':',');
+        });
+    
+        let merge_update_rows = update_rows.join('\n            ');
+    
+    
+        let tpl_into_rows = `{{column_name}}{{virgula}} {{espaco_left}} --{{ordem}} {{data_type}}`
+        let into_rows = columns.map((one: any, index: number) => {
+    
+          let espaco_left = this.generateSpaces(one.column_name);
+          
+          let espaco_rigth = this.generateSpaces(one.column_name);
+          
+          let ordem = this.formatWithZero(one.ordinal_position, 3);
+          let data_type = one.data_type;
+    
+          if(one.character_maximum_length > 0) {
+              data_type += `(${one.character_maximum_length})`;
+          }
+    
+          if(one.is_nullable == 'YES') {
+              data_type += ` not null`;
+          }
+    
+          return tpl_into_rows.replace(/\{{column_name}}/gi, one.column_name)
+                        .replace(/\{{espaco_left}}/gi, espaco_left)//coloca 50 espaços a esquerda
+                        .replace(/\{{espaco_rigth}}/gi, espaco_rigth)//coloca 50 espaços a direita
+                        .replace(/\{{ordem}}/gi, ordem)
+                        .replace(/\{{data_type}}/gi, data_type)
+                        .replace(/\{{virgula}}/gi, columns.length == (index+1) ? ' ':',');
+        });
+    
+        let merge_into_rows = into_rows.join('\n              ');
+    
+    
+        let tpl_values_rows = `fr_data.{{column_name}}{{virgula}} {{espaco_left}} --{{ordem}} {{data_type}}`
+        let values_rows = columns.map((one:any, index: number) => {
+    
+          let espaco_left = this.generateSpaces(one.column_name);
+          
+          let espaco_rigth = this.generateSpaces(one.column_name);
+          
+          let ordem = this.formatWithZero(one.ordinal_position, 3);
+          let data_type = one.data_type;
+    
+          if(one.character_maximum_length > 0) {
+              data_type += `(${one.character_maximum_length})`;
+          }
+    
+          if(one.is_nullable == 'YES') {
+              data_type += ` not null`;
+          }
+    
+          return tpl_values_rows.replace(/\{{column_name}}/gi, one.column_name)
+                        .replace(/\{{espaco_left}}/gi, espaco_left)//coloca 50 espaços a esquerda
+                        .replace(/\{{espaco_rigth}}/gi, espaco_rigth)//coloca 50 espaços a direita
+                        .replace(/\{{ordem}}/gi, ordem)
+                        .replace(/\{{data_type}}/gi, data_type)
+                        .replace(/\{{virgula}}/gi, columns.length == (index+1) ? ' ':',');
+        });
+    
+        let merge_values_rows = values_rows.join('\n              ');
+    
+        let file_name = this.file_name;
+    
+        file_name = file_name.replace('{{schema_create}}', model.schema_create);
+        file_name = file_name.replace('{{table_name}}', model.table.name);
+        file_name = file_name.replace('{{sufixo}}', this.sufixo);
+    
+        let code = this.templates.map(tpl => {
+                            return tpl.replace(/\{{schema_create}}/gi, model.schema_create)
+                                    .replace(/\{{table_name}}/gi, model.table.name)
+                                    .replace(/\{{table_schema}}/gi, model.table_schema)
+                                    .replace(/\{{ano}}/gi, new Date().getFullYear()+'')
+                                    .replace(/\{{sufixo}}/gi, this.sufixo)
+                                    .replace(/\{{pk_type}}/gi, (model.table.pk_type || 'uuid') )
+                                    .replace(/\{{pk_name}}/gi, (model.table.pk_name || 'id') )
+                                    .replace(/\{{update_row_data}}/gi, merge_update_rows)
+                                    .replace(/\{{into_row_data}}/gi, merge_into_rows)
+                                    .replace(/\{{into_values_data}}/gi, merge_values_rows);
+                        }).join('\n\n\n----------------------------------------------------\n');
+
+        const source : SourceCode = {
+            folder: model.folder,
+            file_name,
+            code
+        };
+
+        return source
     }
 
 }

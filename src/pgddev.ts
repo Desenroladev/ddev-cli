@@ -27,9 +27,8 @@ program
     .command('new [project]')
     .description('Create Struct Project')
     .action((command: string, options: string) => {
-        //console.log(command, options);
         const cmd = new NewCommand();
-        cmd.execute(command)
+        cmd.execute(command);
     });
 
 program

@@ -15,8 +15,8 @@ export class DmlCommand extends BaseCommand {
         const dml: DmlModel = {
             folder          : options.folder,
             table_catalog   : (process.env.DB_DATABASE || 'default'),
-            table_schema    : options.table_schema,
-            schema_create   : (options.schema_create || options.table_schema),
+            table_schema    : options.table_schema || 'public',
+            schema_create   : (options.schema_create || options.table_schema || 'public'),
             table: {
                 name    : this.table,
                 pk_type : (options.pk_type || 'uuid'),
