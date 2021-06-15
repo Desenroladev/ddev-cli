@@ -1,6 +1,6 @@
 {
   "name": "pgddev",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "CLI to automate repetitive tasks in PostgreSQL",
   "main": "dist/pgddev.js",
   "types": "dist/pgddev.d.ts",

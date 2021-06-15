@@ -1,11 +1,6 @@
-import { BaseBuilder } from "./base.builder";
 
-export class PurgeBuilder extends BaseBuilder {
-
-    constructor() {
-        const templates = [`
-create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{sufixo}}(
-    fv_id {{pk_type}},
+create or replace function public.dmlapi_tasks_purge(
+    fv_id uuid,
     fv_usuario_id uuid,
     fv_inativo_id int default 0
 )
@@ -14,25 +9,25 @@ create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{sufixo}}(
     security definer
 as $function$
 ------------------------------------------------------------------
--- (c) Copyright {{ano}} Antoniel Lima (antonielliimma@gmail.com)
--- (c) Copyright {{ano}} desenroladev.com.br
+-- (c) Copyright 2021 Antoniel Lima (antonielliimma@gmail.com)
+-- (c) Copyright 2021 desenroladev.com.br
 ------------------------------------------------------------------
--- dmlapi_{{table_name}}_purge: inactive record
+-- dmlapi_tasks_purge: inactive record
 ------------------------------------------------------------------
 declare
-    lr_data    {{table_schema}}.{{table_name}};
+    lr_data    public.tasks;
 begin
     if (fv_id is not null) then
-        lr_data := {{table_schema}}.dmlapi_{{table_name}}_select(fv_id      => fv_id,
+        lr_data := public.dmlapi_tasks_select(fv_id      => fv_id,
                                                                 fv_locking => true);
-        if (lr_data.{{pk_name}} is not null) then
+        if (lr_data.id is not null) then
             ------------------------------------
             lr_data.ativo               := false;
             lr_data.data_inativacao     := now(); 
             lr_data.inativo_id          := fv_inativo_id;
             lr_data.usuario_inativou_id := fv_usuario_id;
             ------------------------------------
-            perform {{table_schema}}.dmlapi_{{table_name}}_merge(fr_data => lr_data);
+            perform public.dmlapi_tasks_merge(fr_data => lr_data);
             ------------------------------------
         end if;
     end if;
@@ -40,8 +35,4 @@ exception when others then
     raise;
 end;
 $function$
-;`];
-        super('purge', templates);
-    }
-
-}
+;

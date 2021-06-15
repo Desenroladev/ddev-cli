@@ -7,7 +7,7 @@ import { SelectBuilder } from "./select.builder";
 
 export class DmlBuilder {
 
-    build(all: DmlModel[]) {
+    async build(all: DmlModel[]) {
 
         let builders = [
             new J2RBuilder(),
@@ -17,18 +17,22 @@ export class DmlBuilder {
             new MergeBuilder()
         ];
             
-        all.forEach((dml: DmlModel) => {
-            builders.map(async builder => {
-                if(!dml.table?.pk_name) {
-                    dml.table.pk_name = 'id';
-                }
-                if(!dml.table?.pk_type) {
-                    dml.table.pk_type = 'uuid';
-                }
-                let source = await builder.build(dml);
-                await builder.write(source);
-            });
-        });
+        await Promise.all(
+            all.map(async (dml: DmlModel) => {
+                return await Promise.all(
+                        builders.map(async builder => {
+                        if(!dml.table?.pk_name) {
+                            dml.table.pk_name = 'id';
+                        }
+                        if(!dml.table?.pk_type) {
+                            dml.table.pk_type = 'uuid';
+                        }
+                        let source = await builder.build(dml);
+                        await builder.write(source);
+                    })
+                );
+            })
+        );
         
     }
 

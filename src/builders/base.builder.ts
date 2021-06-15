@@ -1,6 +1,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { File } from '../core/file';
 import { Database } from "../database/database";
 import { DmlModel } from '../models/dml.model';
 import { SourceCode } from '../models/source-code.model';
@@ -62,6 +63,10 @@ export class BaseBuilder {
     }
 
     async write(source: SourceCode) {
+        
+        if(!File.exists(source.folder)) {
+            File.mkdir(source.folder);
+        }
         
         const path_file = `${source.folder}/${source.file_name}`;
 
