@@ -4,13 +4,14 @@
 
 ![](https://img.shields.io/github/stars/Desenroladev/pgddev.svg) ![](https://img.shields.io/github/forks/Desenroladev/pgddev.svg) ![](https://img.shields.io/github/issues/Desenroladev/pgddev.svg)
 
-##Setup
+## Setup
 
-####Installing pgddev
+#### Installing pgddev
 
 `$ npm i -g pgddev` or `$ yarn global add pgddev`
 
-####Creating a new project
+#### Creating a new project
+
 Creating a new project is quite simple with the PGDDEV. you can create a new PGDDEV project with the following commands in your OS terminal:
 
 `$ pgddev new project_name`
@@ -26,8 +27,10 @@ For your PGDDEV project to work correctly you must configure the application .en
 
 ```
 
-##Avaliable commands
-####Creating a DML
+## Avaliable commands
+
+#### Creating a DML
+
 `$ pgddev dml table_name`
 
 Creating a standard DML framework facilitates and standardizes the development process for any application, so much of the CRUD work will be abstracted.
@@ -39,13 +42,15 @@ Creating a standard DML framework facilitates and standardizes the development p
 | -f or --folder | Specifies the folder where scripts will be generated. |
 | --deploy       | Deploy DML                                            |
 
-####Example
+#### Example
+
 Create the DML structure in the database, with the specified schema, in the specified folder and deploy.
 
 `pgddev dml table_name -s schema_name -f folder_path --deploy`
 
-###Using DML
-####Generated files
+### Using DML
+
+### #Generated files
 
 - dmlapi_table_name_j2r.sql
 - dmlapi_table_name_r2j.sql
@@ -53,7 +58,7 @@ Create the DML structure in the database, with the specified schema, in the spec
 - dmlapi_table_name_purge.sql
 - dmlapi_table_name_select.sql
 
-####Query examples
+#### Query examples
 
 | Query                                                        | Description                                                                       |
 | ------------------------------------------------------------ | --------------------------------------------------------------------------------- |
@@ -63,4 +68,4 @@ Create the DML structure in the database, with the specified schema, in the spec
 | `schema_name.dmlapi_table_name_purge(resource_id, user_id)`  | Soft delete a record in a table from the resource id and user id that deleted it. |
 | `schema_name.dmlapi_table_name_select(resource_id, locking)` | Returns record from id (locking=true locks the record at transaction time)        |
 
-###End
+### End
