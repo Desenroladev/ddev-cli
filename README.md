@@ -34,7 +34,8 @@ For your PGDDEV project to work correctly you must configure the application .en
 `$ pgddev dml table_name`
 
 Creating a standard DML framework facilitates and standardizes the development process for any application, so much of the CRUD work will be abstracted.
-#####Available instructions
+
+##### Available instructions
 
 | Instruction    | Functionality                                         |
 | -------------- | ----------------------------------------------------- |
