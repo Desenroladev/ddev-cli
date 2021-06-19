@@ -13,7 +13,7 @@
 ####Creating a new project
 Creating a new project is quite simple with the PGDDEV. you can create a new PGDDEV project with the following commands in your OS terminal:
 
-`$ pgddev new project-name`
+`$ pgddev new project_name`
 
 ####Setting up .env
 For your PGDDEV project to work correctly you must configure the application .env as follows:
@@ -28,7 +28,7 @@ For your PGDDEV project to work correctly you must configure the application .en
 
 ##Avaliable commands
 ####Creating a DML
-`$ pgddev dml table-name`
+`$ pgddev dml table_name`
 
 Creating a standard DML framework facilitates and standardizes the development process for any application, so much of the CRUD work will be abstracted.
 #####Available instructions
@@ -42,25 +42,25 @@ Creating a standard DML framework facilitates and standardizes the development p
 ####Example
 Create the DML structure in the database, with the specified schema, in the specified folder and deploy.
 
-`pgddev dml table-name -s schema-name -f folder-path --deploy`
+`pgddev dml table_name -s schema_name -f folder_path --deploy`
 
 ###Using DML
 ####Generated files
 
-- dmlapi_table-name_j2r.sql
-- dmlapi_table-name_r2j.sql
-- dmlapi_table-name_merge.sql
-- dmlapi_table-name_purge.sql
-- dmlapi_table-name_select.sql
+- dmlapi_table_name_j2r.sql
+- dmlapi_table_name_r2j.sql
+- dmlapi_table_name_merge.sql
+- dmlapi_table_name_purge.sql
+- dmlapi_table_name_select.sql
 
 ####Query examples
 
 | Query                                                       | Description                                                                       |
 | ----------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `schema-name.dmlapi_table-name_j2r(payload::jsonb)`         | Generates a record in the exact format of the table from a JSON input.            |
-| `schema-name.dmlapi_table-name_r2j(payload::jsonb)`         | Generates a JSON in the exact format of the table from a RECORD input.            |
-| `schema-name.dmlapi_table-name_merge(payload::jsonb)`       | Generates a JSON in the exact format of the table from a RECORD input.            |
-| `schema-name.dmlapi_table-name_purge(resource_id, user_id)` | Soft delete a record in a table from the resource id and user id that deleted it. |
-| `schema-name.dmlapi_table-name_select(resource_id)`         | Returns record from id.                                                           |
+| `schema_name.dmlapi_table_name_j2r(payload::jsonb)`         | Generates a record in the exact format of the table from a JSON input.            |
+| `schema_name.dmlapi_table_name_r2j(payload::jsonb)`         | Generates a JSON in the exact format of the table from a RECORD input.            |
+| `schema_name.dmlapi_table_name_merge(payload::jsonb)`       | Generates a JSON in the exact format of the table from a RECORD input.            |
+| `schema_name.dmlapi_table_name_purge(resource_id, user_id)` | Soft delete a record in a table from the resource id and user id that deleted it. |
+| `schema_name.dmlapi_table_name_select(resource_id)`         | Returns record from id.                                                           |
 
 ###End
