@@ -63,7 +63,7 @@ Create the DML structure in the database, with the specified schema, in the spec
 | Query                                                        | Description                                                                       |
 | ------------------------------------------------------------ | --------------------------------------------------------------------------------- |
 | `schema_name.dmlapi_table_name_j2r(payload::jsonb)`          | turns a jsonb into table record.                                                  |
-| `schema_name.dmlapi_table_name_r2j(payload::jsonb)`          | receives a record from the table and transforms it into jsonb.                    |
+| `schema_name.dmlapi_table_name_r2j(payload::table_name)`     | receives a record from the table and transforms it into jsonb.                    |
 | `schema_name.dmlapi_table_name_merge(payload::jsonb)`        | Generates a JSON in the exact format of the table from a RECORD input.            |
 | `schema_name.dmlapi_table_name_purge(resource_id, user_id)`  | Soft delete a record in a table from the resource id and user id that deleted it. |
 | `schema_name.dmlapi_table_name_select(resource_id, locking)` | Returns record from id (locking=true locks the record at transaction time)        |
