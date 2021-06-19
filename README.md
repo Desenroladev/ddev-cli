@@ -16,7 +16,8 @@ Creating a new project is quite simple with the PGDDEV. you can create a new PGD
 
 `$ pgddev new project_name`
 
-####Setting up .env
+#### Setting up .env
+
 For your PGDDEV project to work correctly you must configure the application .env as follows:
 
 ```.env
@@ -51,7 +52,7 @@ Create the DML structure in the database, with the specified schema, in the spec
 
 ### Using DML
 
-### #Generated files
+#### Generated files
 
 - dmlapi_table_name_j2r.sql
 - dmlapi_table_name_r2j.sql
