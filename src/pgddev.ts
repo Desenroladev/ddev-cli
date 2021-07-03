@@ -19,6 +19,7 @@ program
     .option('-p, --pk_name <pk_name>')
     .option('-t, --pk_type <pk_type>')
     .option('-d --deploy')
+    .option('-b, --disable-software-delete')
     .description('Create DML API')
     .action(async(command, options) => {
         const dml = new DmlCommand(command);

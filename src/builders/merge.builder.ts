@@ -72,7 +72,7 @@ end;
 $function$
 ;`,
 
-`create or replace function {{schema_create}}.dmlapi_{{table_name}}_merge(fr_data jsonb)
+`create or replace function {{schema_create}}.dmlapi_{{table_name}}_merge(fv_jsonb jsonb)
 returns {{schema_create}}.{{table_name}}
 language plpgsql
 security definer
@@ -85,12 +85,26 @@ as $function$
 ------------------------------------------------------------------
 declare
     lr_data           {{schema_create}}.{{table_name}};
+    lv_jsonb          jsonb;
 begin
-    lr_data := {{schema_create}}.dmlapi_{{table_name}}_j2r(fv_jsonb => fr_data);
+    ------------------------------------------------------------------------------
+    lr_data := public.dmlapi_tasks_select(fv_id      => (fv_jsonb->>'{{pk_name}}')::{{pk_type}},
+                                            fv_locking => true);
+    ------------------------------------------------------------------------------
+    if lr_data.{{pk_name}} is not null then
+        lv_jsonb := public.dmlapi_tasks_r2j(fr_data => lr_data);
+        lv_jsonb := lv_jsonb || fv_jsonb;
+    else
+        lv_jsonb := fv_jsonb;
+    end if;
+    ------------------------------------------------------------------------------
+    lr_data := {{schema_create}}.dmlapi_{{table_name}}_j2r(fv_jsonb => lv_jsonb);
+    ------------------------------------------------------------------------------
     if lr_data.{{pk_name}} is null then
         lr_data.{{pk_name}} := gen_random_uuid();
     end if;
-    return {{schema_create}}.dmlapi_{{table_name}}_merge(fr_data => lr_data, fv_old_id => (fr_data->>'old_id')::{{pk_type}});
+    ------------------------------------------------------------------------------
+    return {{schema_create}}.dmlapi_{{table_name}}_merge(fr_data => lr_data, fv_old_id => (fv_jsonb->>'old_id')::{{pk_type}});
 exception when others then
 raise;
 end; $function$;`];

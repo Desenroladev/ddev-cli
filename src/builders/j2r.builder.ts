@@ -43,7 +43,8 @@ $function$;`];
                         udt_name,
                         character_maximum_length,
                         numeric_precision,
-                        is_nullable
+                        is_nullable,
+                        column_default 
                     from information_schema.columns 
                     where table_name = $1
                         and table_schema = $2
@@ -58,7 +59,9 @@ $function$;`];
 
         const columns = await this.db.query(sql, binds);
 
-        let tpl_row = `lv_data.{{column_name}} {{espaco_left}} = fv_jsonb ->> '{{column_name}}'; {{espaco_rigth}} --{{ordem}} {{data_type}}`
+        let tpl_row = `lv_data.{{column_name}} {{espaco_left}} = fv_jsonb->>'{{column_name}}'; {{espaco_rigth}} --{{ordem}} {{data_type}}`
+
+        let tpl_row_default = `lv_data.{{column_name}} {{espaco_left}} = coalesce((fv_jsonb->>'{{column_name}}')::{{data_type}}, {{column_default}}); {{espaco_rigth}} --{{ordem}} {{data_type}}`
 
         let rows = columns.map((one: any) => {
 
@@ -77,11 +80,17 @@ $function$;`];
                 data_type += ` not null`;
             }
 
-            return tpl_row.replace(/\{{column_name}}/gi, one.column_name)
-                          .replace(/\{{espaco_left}}/gi, espaco_left)//coloca 50 espaços a esquerda
-                          .replace(/\{{espaco_rigth}}/gi, espaco_rigth)//coloca 50 espaços a direita
-                          .replace(/\{{ordem}}/gi, ordem)
-                          .replace(/\{{data_type}}/gi, data_type);
+            let tpl = tpl_row;
+            if(one.column_default) {
+                tpl = tpl_row_default;
+            }
+
+            return tpl.replace(/\{{column_name}}/gi, one.column_name)
+                        .replace(/\{{espaco_left}}/gi, espaco_left)//coloca 50 espaços a esquerda
+                        .replace(/\{{espaco_rigth}}/gi, espaco_rigth)//coloca 50 espaços a direita
+                        .replace(/\{{ordem}}/gi, ordem)
+                        .replace(/\{{data_type}}/gi, data_type)
+                        .replace(/\{{column_default}}/gi, one.column_default);
         });
 
         let j2r_rows = rows.join('\n    ');
