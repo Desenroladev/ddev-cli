@@ -1,6 +1,6 @@
 {
   "name": "pgddev",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "CLI to automate repetitive tasks in PostgreSQL",
   "main": "dist/pgddev.js",
   "types": "dist/pgddev.d.ts",
@@ -10,7 +10,8 @@
   "prepublish": "tsc",
   "scripts": {
     "start:dev": "nodemon",
-    "build": "rimraf ./dist && tsc && npm install -g"
+    "build": "rimraf ./dist && tsc && npm install -g",
+    "publish": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
