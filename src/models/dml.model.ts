@@ -3,6 +3,7 @@ interface Table {
     name: string;
     pk_type: string;
     pk_name: string;
+    delete: boolean;
 }
 
 export interface DmlModel {

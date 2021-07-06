@@ -11,7 +11,6 @@ export class DmlCommand extends BaseCommand {
     }
 
     async execute(options: any): Promise<any> {
-
         const dml: DmlModel = {
             folder          : options.folder || path.resolve(),
             table_catalog   : (process.env.DB_DATABASE || 'default'),
@@ -19,13 +18,14 @@ export class DmlCommand extends BaseCommand {
             schema_create   : (options.schema_create || options.table_schema || 'public'),
             table: {
                 name    : this.table,
-                pk_type : (options.pk_type || 'uuid'),
-                pk_name : (options.pk_name || 'id')
+                pk_type : (options.pk_type                  || 'uuid'),
+                pk_name : (options.pk_name                  || 'id'),
+                delete  : !!options.withDeleteSoftware
             }
         };
 
         const builder = new DmlBuilder();
-        await builder.build([dml]);
+        await builder.build(dml);
 
         console.log(`Created DML API from table: ${this.table}`);
 
