@@ -9,7 +9,7 @@ import { DeployCommand } from './commands/deploy.command';
 
 dotenv.config();
 
-program.version('1.0.8');
+program.version('1.0.9');
 
 program
     .command('dml [table]')
@@ -18,7 +18,7 @@ program
     .option('-f, --folder <folder>')
     .option('-p, --pk_name <pk_name>')
     .option('-t, --pk_type <pk_type>')
-    .option('-d --deploy')
+    .option('-d, --deploy')
     .option('-w, --with-delete-software')    
     .description('Create DML API')
     .action(async(command, options) => {

@@ -38,11 +38,14 @@ Creating a standard DML framework facilitates and standardizes the development p
 
 ##### Available instructions
 
-| Instruction    | Functionality                                         |
-| -------------- | ----------------------------------------------------- |
-| -s or --schema | Specifies the schema                                  |
-| -f or --folder | Specifies the folder where scripts will be generated. |
-| --deploy       | Deploy DML                                            |
+| Instruction    				| Functionality                                         |
+| ----------------------------- | ----------------------------------------------------- |
+| -s or --schema 				| Specifies the schema                                  |
+| -f or --folder 				| Specifies the folder where scripts will be generated. |
+| -p or --pk_name 				| Specifies Primary Key name                            |
+| -t or --pk_type 				| Specifies Primary Key type                            |
+| -d or --deploy 				| Deploy DML                                            |
+| -w or --with-delete-software 	| With Software Delete or Not                           |
 
 #### Example
 
@@ -69,5 +72,12 @@ Create the DML structure in the database, with the specified schema, in the spec
 | `schema_name.dmlapi_table_name_merge(payload::jsonb)`        | Generates a JSON in the exact format of the table from a RECORD input.            |
 | `schema_name.dmlapi_table_name_purge(resource_id, user_id)`  | Soft delete a record in a table from the resource id and user id that deleted it. |
 | `schema_name.dmlapi_table_name_select(resource_id, locking)` | Returns record from id (locking=true locks the record at transaction time)        |
+
+
+#### Deploy a DML
+
+`$ pgddev deploy script_or_folder_name`
+
+Passing in the path of a script or folder will execute all SQL commands in the scripts..
 
 ### End
