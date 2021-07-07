@@ -21,10 +21,11 @@ Creating a new project is quite simple with the PGDDEV. you can create a new PGD
 For your PGDDEV project to work correctly you must configure the application .env as follows:
 
 ```.env
-	DB_HOST=YOUR_DATABASE_HOST
-	DB_DATABASE=YOUR_DATABASE_NAME
-	DB_PASSWORD=THE__PASSWORD_OF_YOUR_DATBASE
-	DB_USER=YOUR_DATABASE__USERNAME
+DB_HOST=my_host
+DB_PORT=my_port
+DB_DATABASE=my_database
+DB_PASSWORD=my_password
+DB_USER=my_username
 
 ```
 
@@ -74,7 +75,7 @@ Create the DML structure in the database, with the specified schema, in the spec
 | `schema_name.dmlapi_table_name_select(resource_id, locking)` | Returns record from id (locking=true locks the record at transaction time)        |
 
 
-#### Deploy a DML
+#### Deploy a DML Scripts
 
 `$ pgddev deploy script_or_folder_name`
 
