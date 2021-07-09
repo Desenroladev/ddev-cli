@@ -9,7 +9,7 @@ import { DeployCommand } from './commands/deploy.command';
 
 dotenv.config();
 
-program.version('1.1.0');
+program.version('1.1.2');
 
 program
     .command('dml [table]')

@@ -88,11 +88,11 @@ declare
     lv_jsonb          jsonb;
 begin
     ------------------------------------------------------------------------------
-    lr_data := public.dmlapi_{{table_name}}_select(fv_id      => (fv_jsonb->>'{{pk_name}}')::{{pk_type}},
+    lr_data := {{schema_create}}.dmlapi_{{table_name}}_select(fv_id      => (fv_jsonb->>'{{pk_name}}')::{{pk_type}},
                                             fv_locking => true);
     ------------------------------------------------------------------------------
     if lr_data.{{pk_name}} is not null then
-        lv_jsonb := public.dmlapi_{{table_name}}_r2j(fr_data => lr_data);
+        lv_jsonb := {{schema_create}}.dmlapi_{{table_name}}_r2j(fr_data => lr_data);
         lv_jsonb := lv_jsonb || fv_jsonb;
     else
         lv_jsonb := fv_jsonb;
