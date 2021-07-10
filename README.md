@@ -8,7 +8,7 @@
 
 #### Installing pgddev
 
-`$ npm i -g @ddev-cli` or `$ yarn global add @ddev-cli`
+`$ npm i -g @ddev/cli` or `$ yarn global add @ddev/cli`
 
 #### Creating a new project
 
