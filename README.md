@@ -8,13 +8,13 @@
 
 #### Installing pgddev
 
-`$ npm i -g pgddev` or `$ yarn global add pgddev`
+`$ npm i -g @ddev-cli` or `$ yarn global add @ddev-cli`
 
 #### Creating a new project
 
-Creating a new project is quite simple with the PGDDEV. you can create a new PGDDEV project with the following commands in your OS terminal:
+Creating a new project is quite simple with the DDEV. you can create a new DDEV project with the following commands in your OS terminal:
 
-`$ pgddev new project_name`
+`$ ddev new project_name`
 
 #### Setting up .env
 
@@ -33,7 +33,7 @@ DB_USER=my_username
 
 #### Creating a DML
 
-`$ pgddev dml table_name`
+`$ ddev dml table_name`
 
 Creating a standard DML framework facilitates and standardizes the development process for any application, so much of the CRUD work will be abstracted.
 
@@ -52,7 +52,7 @@ Creating a standard DML framework facilitates and standardizes the development p
 
 Create the DML structure in the database, with the specified schema, in the specified folder and deploy.
 
-`pgddev dml table_name -s schema_name -f folder_path --deploy`
+`ddev dml table_name -s schema_name -f folder_path --deploy`
 
 ### Using DML
 
@@ -77,7 +77,7 @@ Create the DML structure in the database, with the specified schema, in the spec
 
 #### Deploy a DML Scripts
 
-`$ pgddev deploy script_or_folder_name`
+`$ ddev deploy script_or_folder_name`
 
 Passing in the path of a script or folder will execute all SQL commands in the scripts..
 
