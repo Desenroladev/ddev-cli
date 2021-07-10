@@ -59,9 +59,9 @@ $function$;`];
 
         const columns = await this.db.query(sql, binds);
 
-        let tpl_row = `lv_data.{{column_name}} {{espaco_left}} = fv_jsonb->>'{{column_name}}'; {{espaco_rigth}} --{{ordem}} {{data_type}}`
+        let tpl_row = `lv_data.{{column_name}} {{espaco_left}} = fv_jsonb->>'{{column_name}}'; {{espaco_rigth}} --{{ordem}} {{data_type_comment}}`
 
-        let tpl_row_default = `lv_data.{{column_name}} {{espaco_left}} = coalesce((fv_jsonb->>'{{column_name}}')::{{data_type}}, {{column_default}}); {{espaco_rigth}} --{{ordem}} {{data_type}}`
+        let tpl_row_default = `lv_data.{{column_name}} {{espaco_left}} = coalesce((fv_jsonb->>'{{column_name}}')::{{data_type}}, {{column_default}}); {{espaco_rigth}} --{{ordem}} {{data_type_comment}}`
 
         let rows = columns.map((one: any) => {
 
@@ -71,13 +71,14 @@ $function$;`];
             
             let ordem = this.formatWithZero(one.ordinal_position, 3);
             let data_type = one.data_type;
+            let data_type_comment = one.data_type;
 
             if(one.character_maximum_length > 0) {
-                data_type += `(${one.character_maximum_length})`;
+                data_type_comment += `(${one.character_maximum_length})`;
             }
 
-            if(one.is_nullable == 'YES') {
-                data_type += ` not null`;
+            if(one.is_nullable == 'NO') {
+                data_type_comment += ` not null`;
             }
 
             let tpl = tpl_row;
@@ -90,6 +91,7 @@ $function$;`];
                         .replace(/\{{espaco_rigth}}/gi, espaco_rigth)//coloca 50 espaços a direita
                         .replace(/\{{ordem}}/gi, ordem)
                         .replace(/\{{data_type}}/gi, data_type)
+                        .replace(/\{{data_type_comment}}/gi, data_type_comment)
                         .replace(/\{{column_default}}/gi, one.column_default);
         });
 

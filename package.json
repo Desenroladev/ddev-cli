@@ -32,7 +32,8 @@
     "@types/pg": "^7.14.9",
     "commander": "^7.0.0",
     "dotenv": "^8.2.0",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "pgddev": "^1.1.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.25",
