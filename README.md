@@ -1,4 +1,4 @@
-# PGDDEV
+# DDEV CLI
 
 ![](https://desenroladev.com.br/public/logo-180x180.png)
 
@@ -6,9 +6,9 @@
 
 ## Setup
 
-#### Installing pgddev
+#### Installing ddev
 
-`$ npm i -g @ddev/cli` or `$ yarn global add @ddev/cli`
+`$ npm i -g @desenroladev/cli` or `$ yarn global add @desenroladev/cli`
 
 #### Creating a new project
 
@@ -18,7 +18,7 @@ Creating a new project is quite simple with the DDEV. you can create a new DDEV 
 
 #### Setting up .env
 
-For your PGDDEV project to work correctly you must configure the application .env as follows:
+For your DDEV project to work correctly you must configure the application .env as follows:
 
 ```.env
 DB_HOST=my_host

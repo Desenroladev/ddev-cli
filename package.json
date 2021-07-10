@@ -1,6 +1,6 @@
 {
-  "name": "@ddev/cli",
-  "version": "1.0.10",
+  "name": "@desenroladev/cli",
+  "version": "2.0.0",
   "description": "CLI to automate repetitive tasks in PostgreSQL",
   "main": "dist/ddev.js",
   "types": "dist/ddev.d.ts",
@@ -8,10 +8,11 @@
     "ddev": "dist/ddev.js"
   },
   "prepublish": "tsc",
+  "private": false,
   "scripts": {
     "start:dev": "nodemon",
-    "build": "rimraf ./dist && tsc",
-    "publish": "npm run build && npm publish"
+    "build": "rm -r ./dist && tsc",
+    "publish": "npm run build && npm publish --access=public"
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,6 @@
   "devDependencies": {
     "@types/node": "^14.14.25",
     "nodemon": "^2.0.7",
-    "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   }
