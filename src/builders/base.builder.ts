@@ -1,8 +1,8 @@
 
+import { Database } from '@desenroladev/pg';
 import * as fs from 'fs';
 import * as path from 'path';
 import { File } from '../core/file';
-import { Database } from "../database/database";
 import { DmlModel } from '../models/dml.model';
 import { SourceCode } from '../models/source-code.model';
 

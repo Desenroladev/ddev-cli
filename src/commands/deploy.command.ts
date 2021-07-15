@@ -1,8 +1,7 @@
 
 import { BaseCommand } from "./base.command";
 import * as fs from 'fs';
-import { Database } from "../database/database";
-import { passThroughOptions } from "commander";
+import { Database } from "@desenroladev/pg";
 
 export class DeployCommand extends BaseCommand {
 

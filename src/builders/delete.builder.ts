@@ -7,7 +7,7 @@ export class DeleteBuilder extends BaseBuilder {
 create or replace function {{schema_create}}.dmlapi_{{table_name}}_{{sufixo}}(
     fv_id {{pk_type}}
 )
-    returns void 
+    returns {{schema_create}}.{{table_name}}
     language plpgsql
     security definer
 as $function$
@@ -29,8 +29,10 @@ begin
             where 1 = 1
                 and {{pk_name}} = fv_id;
             ------------------------------------
+            return lr_data;
         end if;
     end if;
+    return null;
 exception when others then
     raise;
 end; $function$;`];
