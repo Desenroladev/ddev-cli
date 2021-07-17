@@ -41,12 +41,13 @@ Creating a standard DML framework facilitates and standardizes the development p
 
 | Instruction    				| Functionality                                         |
 | ----------------------------- | ----------------------------------------------------- |
-| -s or --schema 				| Specifies the schema                                  |
-| -f or --folder 				| Specifies the folder where scripts will be generated. |
-| -p or --pk_name 				| Specifies Primary Key name                            |
-| -t or --pk_type 				| Specifies Primary Key type                            |
+| -s or --schema <schema_name>	| Specifies the schema                                  |
+| -f or --folder <folder> 		| Specifies the folder where scripts will be generated. |
+| -p or --pk_name <pk_name>		| Specifies Primary Key name                            |
+| -t or --pk_type <pk_type>	    | Specifies Primary Key type                            |
 | -d or --deploy 				| Deploy DML                                            |
 | -w or --with-delete-software 	| With Software Delete or Not                           |
+| -e or --enviroment <file>	    | Inform the path of the .env                           |
 
 #### Example
 

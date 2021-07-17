@@ -6,10 +6,11 @@ import dotenv from 'dotenv';
 import { NewCommand } from './commands/new.command';
 import { DmlCommand } from './commands/dml.command';
 import { DeployCommand } from './commands/deploy.command';
+import path from 'path';
 
 dotenv.config();
 
-program.version('2.0.3');
+program.version('2.0.5');
 
 program
     .command('dml [table]')
@@ -20,8 +21,13 @@ program
     .option('-t, --pk_type <pk_type>')
     .option('-d, --deploy')
     .option('-w, --with-delete-software')    
+    .option('-e, --enviroment <env>')
     .description('Create DML API')
     .action(async(command, options) => {
+        if(options.enviroment) {
+            const env = dotenv.config({path: path.resolve(options.enviroment)});
+            process.env = env.parsed || {};
+        }
         const dml = new DmlCommand(command);
         dml.execute(options);
     });

@@ -15,7 +15,15 @@ export class BaseBuilder {
         protected sufixo    : string, 
         protected templates : string[]
     ) {
-        this.db = new Database();
+        const port = parseInt(process.env?.DB_PORT || '5432') ;
+        const options = {
+            user: process.env?.DB_USER as string,
+            host: process.env?.DB_HOST as string,
+            database: process.env?.DB_DATABASE as string,
+            password: process.env?.DB_PASSWORD as string,
+            port: port
+        };
+        this.db = new Database(options);
     }
 
     formatWithZero(number:number, houses: number=3) {

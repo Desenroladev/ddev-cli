@@ -123,16 +123,16 @@ end; $function$;`];
                         numeric_precision,
                         is_nullable
                     from information_schema.columns 
-                    where table_name = $1
-                        and table_schema = $2
-                        and table_catalog = $3
+                    where table_name = :table_name
+                        and table_schema = :table_schema
+                        and table_catalog = :table_catalog
                     order by ordinal_position`;
     
-        const binds: any = [
-            model.table.name,
-            model.table_schema,
-            model.table_catalog
-        ];
+        const binds: any = {
+            table_name    : model.table.name,
+            table_schema  : model.table_schema,
+            table_catalog : model.table_catalog
+        };
 
         const columns = await this.db.query(sql, binds);
     
