@@ -10,7 +10,7 @@ import path from 'path';
 
 dotenv.config();
 
-program.version('2.0.5');
+program.version('2.0.6');
 
 program
     .command('dml [table]')

@@ -59,9 +59,9 @@ $function$;`];
 
         const columns = await this.db.query(sql, binds);
 
-        let tpl_row = `lv_data.{{column_name}} {{espaco_left}} = fv_jsonb->>'{{column_name}}'; {{espaco_rigth}} --{{ordem}} {{data_type_comment}}`
+        let tpl_row = `lv_data.{{column_name}} {{espaco_left}} := fv_jsonb->>'{{column_name}}'; {{espaco_rigth}} --{{ordem}} {{data_type_comment}}`
 
-        let tpl_row_default = `lv_data.{{column_name}} {{espaco_left}} = coalesce((fv_jsonb->>'{{column_name}}')::{{data_type}}, {{column_default}}); {{espaco_rigth}} --{{ordem}} {{data_type_comment}}`
+        let tpl_row_default = `lv_data.{{column_name}} {{espaco_left}} := coalesce((fv_jsonb->>'{{column_name}}')::{{data_type}}, {{column_default}}); {{espaco_rigth}} --{{ordem}} {{data_type_comment}}`
 
         let rows = columns.map((one: any) => {
 
